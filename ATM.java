@@ -151,9 +151,7 @@ public class ATM {
                         balance -= withdrawAmount;
                         System.out.println("\nYOU HAVE SUCCESFULLY WITHDRAWED PHP " + withdrawAmount + "\n\n");
                     }
-                    else {
-                        System.out.println("\nTRANSACTION CANCELED\n");
-                    }
+                    else System.out.println("\nTRANSACTION CANCELED\n");
                     isValid = false;
 
                 }
