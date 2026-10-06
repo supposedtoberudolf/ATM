@@ -1,3 +1,8 @@
+/*
+    - FIX KUNG SAAN KAPAG ENTER LANG GINAWA NG USER SA MGA USER INPUT
+*/
+
+
 import java.util.Scanner;
 
 public class ATM {
@@ -6,11 +11,12 @@ public class ATM {
         
         double balance = 5000.0;
         boolean isValid = true;
+
+        String pin = "12345"
+             , ENTERED_PIN = "";
         
-          int choice = 0
-            , pin = 12345
-            , ENTERED_PIN = 0
-            , attempt = 3;
+        int choice = 0
+          , attempt = 3;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -19,11 +25,10 @@ public class ATM {
             System.out.println("|          AUTOMATED TELLER MACHINE          |");
             System.out.println("+--------------------------------------------+\n");
             System.out.print("ENTER YOUR PIN: ");
-            ENTERED_PIN = scanner.nextInt();
-            scanner.nextLine();
+            ENTERED_PIN = scanner.nextLine();
             System.out.println();
 
-            if (ENTERED_PIN != pin) {
+            if (!(ENTERED_PIN.equals(pin))) {
                 
                 attempt--;
 
@@ -34,7 +39,7 @@ public class ATM {
                 System.out.printf("INVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT\n\n", attempt); 
             }
             
-        } while (ENTERED_PIN != pin);
+        } while (!(ENTERED_PIN.equals(pin)));
 
         do {
             
@@ -46,7 +51,9 @@ public class ATM {
             
             else if (choice == 3) balance = withdraw(scanner, balance);    
 
-            else if (choice == 4) isValid = false;
+            else if (choice == 4) pin = ChangePIN(scanner, pin);
+
+            else if (choice == 5) isValid = false;
 
             else System.out.println("INVALID INPUT\nPLEASE TRY AGAIN!\n");
 
@@ -59,9 +66,15 @@ public class ATM {
 
         System.out.println("+--------------------------------------------+");
         System.out.println("|          AUTOMATED TELLER MACHINE          |");
-        System.out.println("+--------------------------------------------+\n");
-        System.out.println("     [1] CHECK BALANCE    [2] DEPOSIT\n");
-        System.out.println("     [3] WITHDRAW         [4] EXIT");
+        System.out.println("+--------------------------------------------+");
+        System.out.println("|                                            |");
+        System.out.println("|   [1] CHECK BALANCE    [4] CHANGE PIN      |");
+        System.out.println("|                                            |");
+        System.out.println("|   [2] DEPOSIT          [5] EXIT            |");
+        System.out.println("|                                            |");
+        System.out.println("|   [3] WITHDRAW                             |");
+        System.out.println("|                                            |");
+        System.out.println("+--------------------------------------------+");
         System.out.print("\n\nSELECT: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -163,6 +176,92 @@ public class ATM {
         } while (isValid);
 
         return balance;
+    }
+
+    static String ChangePIN(Scanner scanner, String pin) {
+
+        String CHANGE_PIN = "";
+        String ENTERED_PIN = "";
+
+        int attempt = 3;
+        int valid = 0;
+        int ChangePIN_Valid = 0;
+        char confirm = '\0';
+        
+        System.out.println("+--------------------------------------------+");
+        System.out.println("|          AUTOMATED TELLER MACHINE          |");
+        System.out.println("+--------------------------------------------+");
+        System.out.println("|                 CHANGE PIN                 |");
+
+        do {
+
+            System.out.print("\n\nENTER YOUR CURRENT PIN: ");
+            ENTERED_PIN = scanner.nextLine();
+
+            if (!(ENTERED_PIN.equals(pin))) {
+                
+                attempt--;
+                
+                if (attempt == 0) {
+                    System.out.println("\nYOU HAVE FAILED TO ENTER YOUR PIN!");
+                    System.out.println("\nRETURNING TO MAIN MENU . . .\n");
+                    valid = 2;
+                }
+                else System.out.printf("\nINVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT", attempt);
+                 
+            }
+            else valid = 1;
+
+        } while (valid == 0);
+
+        if (valid == 1) {
+
+            do {
+
+                System.out.print("\nENTER YOUR NEW PIN: ");
+                CHANGE_PIN = scanner.nextLine();
+                
+                boolean isDigit = true;
+                for (int i = 0; i < CHANGE_PIN.length(); i++) {
+                    if (!Character.isDigit(CHANGE_PIN.charAt(i))) {
+                        isDigit = false;
+                        break;
+                    }
+                }
+
+                if (CHANGE_PIN.equals(pin)) System.out.println("\nTHIS IS YOUR CURRENT PIN!\nPROVIDE A NEW ONE");
+
+                else if (!isDigit) System.out.println("\nPIN MUST CONTAIN DIGITS ONLY!");
+
+                else if ((CHANGE_PIN.length() >= 7) || (CHANGE_PIN.length() <= 3)) System.out.println("\nPIN MUST BE ATLEAST 4 CHARACTERS OR 6 CHARACTERS MAX!\nPLEASE TRY AGAIN!");
+                
+                else {
+
+                    do {
+
+                        System.out.printf("\nCONFIRM NEW PIN: %s", CHANGE_PIN);
+                        System.out.print("\nYES OR NO [Y/N]: ");
+                        confirm = scanner.nextLine().toUpperCase().charAt(0);
+
+                    } while ((confirm != 'Y') && (confirm != 'N'));
+                    
+                    if (confirm == 'Y') ChangePIN_Valid = 1;
+
+                    else {
+                        ChangePIN_Valid = 1;
+                        System.out.println("\nYOU DID NOT CONFIRM NEW PIN");
+                        System.out.println("\nRETURNING TO MAIN MENU . . .\n");
+                        CHANGE_PIN = pin;
+                    }
+                }
+
+            } while (ChangePIN_Valid == 0);
+  
+        }
+
+        else CHANGE_PIN = pin;
+
+        return CHANGE_PIN;
     }
     
 }
