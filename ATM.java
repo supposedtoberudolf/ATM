@@ -4,12 +4,13 @@ public class ATM {
 
     public static void main(String[] args) {
         
-        int choice = 0;
         double balance = 5000.0;
         boolean isValid = true;
-        int pin = 12345;
-        int ENTERED_PIN = 0;
-        int attempt = 3;
+        
+          int choice = 0
+            , pin = 12345
+            , ENTERED_PIN = 0
+            , attempt = 3;
 
         Scanner scanner = new Scanner(System.in);
 
