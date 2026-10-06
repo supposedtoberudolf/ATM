@@ -25,14 +25,14 @@ public class ATM {
             if (ENTERED_PIN != pin) {
                 
                 attempt--;
-                
+
                 if (attempt == 0) {
-                    System.out.println("\nACCOUNT LOCKED!\n\n");
+                    System.out.println("\nACCOUNT LOCKED!\n");
                     System.exit(0);
                 }
-                System.out.printf("\nINVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT\n", attempt); 
+                System.out.printf("\nINVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT\n\n", attempt); 
             }
-
+            
         } while (ENTERED_PIN != pin);
 
         do {
