@@ -21,6 +21,7 @@ public class ATM {
             System.out.print("ENTER YOUR PIN: ");
             ENTERED_PIN = scanner.nextInt();
             scanner.nextLine();
+            System.out.println();
 
             if (ENTERED_PIN != pin) {
                 
