@@ -31,7 +31,7 @@ public class ATM {
                     System.out.println("\nACCOUNT LOCKED!\n");
                     System.exit(0);
                 }
-                System.out.printf("\nINVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT\n\n", attempt); 
+                System.out.printf("INVALID PIN\nYOU ONLY HAVE %d ATTEMPTS LEFT\n\n", attempt); 
             }
             
         } while (ENTERED_PIN != pin);
