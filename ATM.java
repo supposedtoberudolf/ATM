@@ -1,8 +1,3 @@
-/*
-    - FIX KUNG SAAN KAPAG ENTER LANG GINAWA NG USER SA MGA USER INPUT
-*/
-
-
 import java.util.Scanner;
 
 public class ATM {
@@ -98,6 +93,8 @@ public class ATM {
         double deposit;
         boolean isValid = true;
 
+        String confirm = "";
+
         do {
             
             System.out.println("+--------------------------------------------+");
@@ -109,13 +106,31 @@ public class ATM {
             scanner.nextLine();
             System.out.println();
         
+        
         if (deposit <= 0) System.out.println("DEPOSIT MUST BE ABOVE 0!\nPLEASE TRY AGAIN!");
 
         else {
             if (deposit % 100 == 0) {
-                balance += deposit;
-                System.out.println("\nYOU HAVE SUCCESFULLY DEPOSITED PHP " + deposit + "\n\n");
-                isValid = false;
+
+                do {
+                        System.out.println("DEPOSIT: PHP " + deposit);
+                        System.out.print("\nCONFIRM [Y/N]: ");
+                        confirm = scanner.nextLine().toUpperCase();
+
+                        if (confirm.isEmpty()) System.out.println("\nINPUT CANNOT BE EMPTY!\n");
+
+                        else if (confirm.length() > 1) System.out.println("\nINVALID INPUT!\nCHOOSE [Y] or [N] ONLY\n");
+                        
+                    } while (!(confirm.equals("Y")) && !(confirm.equals("N")));
+
+                    if (confirm.equals("Y")) {
+                        balance += deposit;
+                        System.out.println("\nYOU HAVE SUCCESFULLY DEPOSITED PHP " + deposit + "\n\n");
+                        isValid = false;
+                    }
+                    else System.out.println("\nTRANSACTION CANCELED\n");
+                    isValid = false;
+                
             }
             else System.out.println("DEPOSIT AMOUNT MUST BE MULTIPLE OF 100\nPLEASE TRY AGAIN");
         }
@@ -129,7 +144,7 @@ public class ATM {
 
         double withdrawAmount;
         boolean isValid = true;
-        char confirm = '\0';
+        String confirm = "";
 
         do {
 
@@ -156,11 +171,16 @@ public class ATM {
 
                     do {
                         System.out.println("WITHDRAW: PHP " + withdrawAmount);
-                        System.out.println("\nCONFIRM [Y/N]: ");
-                        confirm = scanner.nextLine().toUpperCase().charAt(0);
-                    } while ((confirm != 'Y') && (confirm != 'N'));
+                        System.out.print("\nCONFIRM [Y/N]: ");
+                        confirm = scanner.nextLine().toUpperCase();
+
+                        if (confirm.isEmpty()) System.out.println("\nINPUT CANNOT BE EMPTY!\n");
+
+                        else if (confirm.length() > 1) System.out.println("\nINVALID INPUT!\nCHOOSE [Y] or [N] ONLY\n");
+                        
+                    } while (!(confirm.equals("Y")) && !(confirm.equals("N")));
                     
-                    if (confirm == 'Y') {
+                    if (confirm.equals("Y")) {
                         balance -= withdrawAmount;
                         System.out.println("\nYOU HAVE SUCCESFULLY WITHDRAWED PHP " + withdrawAmount + "\n\n");
                     }
@@ -182,11 +202,11 @@ public class ATM {
 
         String CHANGE_PIN = "";
         String ENTERED_PIN = "";
+        String confirm = "";
 
         int attempt = 3;
         int valid = 0;
         int ChangePIN_Valid = 0;
-        char confirm = '\0';
         
         System.out.println("+--------------------------------------------+");
         System.out.println("|          AUTOMATED TELLER MACHINE          |");
@@ -241,11 +261,15 @@ public class ATM {
 
                         System.out.printf("\nCONFIRM NEW PIN: %s", CHANGE_PIN);
                         System.out.print("\nYES OR NO [Y/N]: ");
-                        confirm = scanner.nextLine().toUpperCase().charAt(0);
+                        confirm = scanner.nextLine().toUpperCase();
 
-                    } while ((confirm != 'Y') && (confirm != 'N'));
+                        if (confirm.isEmpty()) System.out.println("\nINPUT CANNOT BE EMPTY!\n");
+
+                        else if (confirm.length() > 1) System.out.println("\nINVALID INPUT!\nCHOOSE [Y] or [N] ONLY\n");
+
+                    } while (!(confirm.equals("Y")) && !(confirm.equals("N")));
                     
-                    if (confirm == 'Y') ChangePIN_Valid = 1;
+                    if (confirm.equals("Y")) ChangePIN_Valid = 1;
 
                     else {
                         ChangePIN_Valid = 1;
